@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Database Spreadsheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .highlighted {
+            background-color: #e6f7ff !important;
+        }
+        .primary-key {
+            font-weight: bold;
+            color: blue;
+        }
+        .foreign-key {
+            font-weight: bold;
+            color: purple;
+        }
+        .query-box {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .query-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .formula {
+            font-family: Consolas, monospace;
+            background-color: #f1f1f1;
+            padding: 8px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .note {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .tab-links {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .tab-link {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 16px;
+            flex: 1;
+            text-align: center;
+        }
+        .tab-link:hover {
+            background-color: #ddd;
+        }
+        .tab-link.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        .active-tab {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Library Database Spreadsheet</h1>
+        
+        <div class="tab-links">
+            <button class="tab-link active" onclick="openTab(event, 'original-db')">Original Database</button>
+            <button class="tab-link" onclick="openTab(event, 'improved-db')">Improved Database Structure</button>
+            <button class="tab-link" onclick="openTab(event, 'queries')">Query Solutions</button>
+        </div>
+        
+        <!-- Original Database Tab -->
+        <div id="original-db" class="tab-content active-tab">
+            <div class="section">
+                <h2>Original Database Structure (bbbbb.csv)</h2>
+                <p>This is the original single-table structure of the library database:</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Book_ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>Publication_date</th>
+                            <th>Available</th>
+                            <th>Last_checkout_date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pride and Prejudice</td>
+                            <td>Jane Austen</td>
+                            <td>Classics</td>
+                            <td>1813</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Moby Dick</td>
+                            <td>Herman Melville</td>
+                            <td>Classics</td>
+                            <td>1851</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>1984</td>
+                            <td>George Orwell</td>
+                            <td>Classics</td>
+                            <td>1949</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>The Great Gatsby</td>
+                            <td>F. Scott Fitzgerald</td>
+                            <td>Classics</td>
+                            <td>1925</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>To Kill a Mockingbird</td>
+                            <td>Harper Lee</td>
+                            <td>Classics</td>
+                            <td>1960</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Charlotte's Web</td>
+                            <td>E.B. White</td>
+                            <td>Children's Books</td>
+                            <td>1952</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>The Very Hungry Caterpillar</td>
+                            <td>Eric Carle</td>
+                            <td>Children's Books</td>
+                            <td>1969</td>
+                            <td>TRUE</td>
+                            <td>1900-01-01</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note">
+                    <p>Issues with this structure:</p>
+                    <ul>
+                        <li>Data redundancy (e.g., same author or genre repeated multiple times)</li>
+                        <li>Limited transaction history (only keeps most recent checkout date)</li>
+                        <li>No way to track who checked out a book</li>
+                        <li>No due date information</li>
+                        <li>All books show as available despite having checkout dates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Improved Database Tab -->
+        <div id="improved-db" class="tab-content">
+            <div class="section">
+                <h2>Improved Database Structure (Normalized)</h2>
+                <p>Here's the improved database structure with multiple normalized tables:</p>
+                
+                <!-- Books Table -->
+                <h3>Books Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Book_ID</th>
+                            <th>Title</th>
+                            <th>ISBN</th>
+                            <th class="foreign-key">Publisher_ID</th>
+                            <th>Publication_date</th>
+                            <th>Available</th>
+                            <th>Total_copies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Pride and Prejudice</td>
+                            <td>9780141439518</td>
+                            <td>3</td>
+                            <td>1813</td>
+                            <td>TRUE</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Moby Dick</td>
+                            <td>9780142437247</td>
+                            <td>3</td>
+                            <td>1851</td>
+                            <td>TRUE</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>1984</td>
+                            <td>9780451524935</td>
+                            <td>5</td>
+                            <td>1949</td>
+                            <td>TRUE</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Authors Table -->
+                <h3>Authors Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Author_ID</th>
+                            <th>First_name</th>
+                            <th>Last_name</th>
+                            <th>Birth_year</th>
+                            <th>Death_year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jane</td>
+                            <td>Austen</td>
+                            <td>1775</td>
+                            <td>1817</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Herman</td>
+                            <td>Melville</td>
+                            <td>1819</td>
+                            <td>1891</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>George</td>
+                            <td>Orwell</td>
+                            <td>1903</td>
+                            <td>1950</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Book_Authors Table -->
+                <h3>Book_Authors Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key foreign-key">Book_ID</th>
+                            <th class="primary-key foreign-key">Author_ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Genres Table -->
+                <h3>Genres Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Genre_ID</th>
+                            <th>Genre_name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Classics</td>
+                            <td>Books that have stood the test of time</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Children's Books</td>
+                            <td>Books intended for young readers</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Young Adult / Fantasy</td>
+                            <td>Fiction targeting teenage readers, often with fantasy elements</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Book_Genres Table -->
+                <h3>Book_Genres Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key foreign-key">Book_ID</th>
+                            <th class="primary-key foreign-key">Genre_ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Publishers Table -->
+                <h3>Publishers Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Publisher_ID</th>
+                            <th>Publisher_name</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Penguin Random House</td>
+                            <td>New York, USA</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>HarperCollins</td>
+                            <td>New York, USA</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Penguin Classics</td>
+                            <td>London, UK</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Patrons Table -->
+                <h3>Patrons Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Patron_ID</th>
+                            <th>First_name</th>
+                            <th>Last_name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Registration_date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John</td>
+                            <td>Smith</td>
+                            <td>john.smith@email.com</td>
+                            <td>555-123-4567</td>
+                            <td>2022-01-15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Emily</td>
+                            <td>Johnson</td>
+                            <td>emily.j@email.com</td>
+                            <td>555-987-6543</td>
+                            <td>2022-02-28</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Michael</td>
+                            <td>Williams</td>
+                            <td>m.williams@email.com</td>
+                            <td>555-555-5555</td>
+                            <td>2022-03-10</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Transactions Table -->
+                <h3>Transactions Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="primary-key">Transaction_ID</th>
+                            <th class="foreign-key">Book_ID</th>
+                            <th class="foreign-key">Patron_ID</th>
+                            <th>Checkout_date</th>
+                            <th>Due_date</th>
+                            <th>Return_date</th>
+                            <th>Fine_amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>5</td>
+                            <td>1</td>
+                            <td>2025-01-15</td>
+                            <td>2025-01-29</td>
+                            <td>2025-01-28</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>10</td>
+                            <td>2</td>
+                            <td>2025-02-10</td>
+                            <td>2025-02-24</td>
+                            <td>2025-02-25</td>
+                            <td>1.00</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>12</td>
+                            <td>3</td>
+                            <td>2025-03-01</td>
+                            <td>2025-03-15</td>
+                            <td>null</td>
+                            <td>null</td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="text-align: center;">... more rows ...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="note">
+                    <p>Benefits of this improved structure:</p>
+                    <ul>
+                        <li>Eliminates data redundancy</li>
+                        <li>Maintains referential integrity</li>
+                        <li>Allows for multiple authors per book</li>
+                        <li>Tracks complete transaction history</li>
+                        <li>Includes patron information</li>
+                        <li>Records due dates and fines</li>
+                        <li>Enables more complex queries and reports</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Queries Tab -->
+        <div id="queries" class="tab-content">
+            <div class="section">
+                <h2>Spreadsheet Formulas for Queries</h2>
+                <p>These formulas provide answers to the database queries based on the original structure (where A1:G51 represents the data range with headers in row 1).</p>
+                
+                <div class="query-box">
+                    <div class="query-title">1. Find all available books in the "Classics" genre</div>
+                    <p><strong>SQL Equivalent:</strong> <code>SELECT Book_ID, Title, Author FROM bbbbb WHERE Genre = 'Classics' AND Available = true;</code></p>
+                    
+                    <h4>Google Sheets:</h4>
+                    <div class="formula">
+                        =QUERY(A1:G51, "SELECT A, B, C WHERE D = 'Classics' AND F = TRUE", 1)
+                    </div>
+                    
+                    <h4>Excel:</h4>
+                    <div class="formula">
+                        =FILTER(A2:C51, (D2:D51="Classics")*(F2:F51=TRUE))
+                    </div>
+                    
+                    <p class="note">This will return the Book_ID, Title, and Author of all books in the Classics genre that are currently available.</p>
+                </div>
+                
+                <div class="query-box">
+                    <div class="query-title">2. Count books by genre</div>
+                    <p><strong>SQL Equivalent:</strong> <code>SELECT Genre, COUNT(*) as Book_Count FROM bbbbb GROUP BY Genre ORDER BY Book_Count DESC;</code></p>
+                    
+                    <h4>Google Sheets:</h4>
+                    <div class="formula">
+                        =QUERY(A1:G51, "SELECT D, COUNT(A) WHERE D != '' GROUP BY D ORDER BY COUNT(A) DESC LABEL COUNT(A) 'Book_Count'", 1)
+                    </div>
+                    
+                    <h4>Excel (using PivotTable):</h4>
+                    <p>Create a Pivot Table with:</p>
+                    <ul>
+                        <li>Rows: Genre</li>
+                        <li>Values: Count of Book_ID</li>
+                        <li>Sort: Descending by count</li>
+                    </ul>
+                    
+                    <p class="note">This will return each genre and the number of books in that genre, sorted by the book count in descending order.</p>
+                </div>
+                
+                <div class="query-box">
+                    <div class="query-title">3. Find books published after 2015</div>
+                    <p><strong>SQL Equivalent:</strong> <code>SELECT Title, Author, Publication_date FROM bbbbb WHERE Publication_date > 2015 ORDER BY Publication_date DESC;</code></p>
+                    
+                    <h4>Google Sheets:</h4>
+                    <div class="formula">
+                        =QUERY(A1:G51, "SELECT B, C, E WHERE E > 2015 ORDER BY E DESC", 1)
+                    </div>
+                    
+                    <h4>Excel:</h4>
+                    <div class="formula">
+                        =SORT(FILTER(B2:E51, E2:E51>2015), 3, FALSE)
+                    </div>
+                    
+                    <p class="note">This will return the Title, Author, and Publication date of all books published after 2015, sorted by publication date in descending order.</p>
+                </div>
+                
+                <div class="query-box">
+                    <div class="query-title">4. Update a book to be checked out (as of today, March 31, 2025)</div>
+                    <p><strong>SQL Equivalent:</strong> <code>UPDATE bbbbb SET Available = false, Last_checkout_date = '2025-03-31' WHERE Book_ID = 1;</code></p>
+                    
+                    <p>For this update operation in a spreadsheet:</p>
+                    <ol>
+                        <li>Find the row where Book_ID = 1</li>
+                        <li>Change the value in the Available column (F) to FALSE</li>
+                        <li>Change the value in the Last_checkout_date column (G) to "2025-03-31"</li>
+                    </ol>
+                    
+                    <p class="note">This is a manual update operation in a spreadsheet. For data validation, you can set up rules to ensure Available is boolean and Last_checkout_date is a valid date.</p>
+                </div>
+                
+                <div class="query-box">
+                    <div class="query-title">5. Find older books (published before 1950) that are currently available</div>
+                    <p><strong>SQL Equivalent:</strong> <code>SELECT Title, Author, Publication_date FROM bbbbb WHERE Publication_date < 1950 AND Available = true ORDER BY Publication_date;</code></p>
+                    
+                    <h4>Google Sheets:</h4>
+                    <div class="formula">
+                        =QUERY(A1:G51, "SELECT B, C, E WHERE E < 1950 AND F = TRUE ORDER BY E ASC", 1)
+                    </div>
+                    
+                    <h4>Excel:</h4>
+                    <div class="formula">
+                        =SORT(FILTER(B2:E51, (E2:E51<1950)*(F2:F51=TRUE)), 3, TRUE)
+                    </div>
+                    
+                    <p class="note">This will return the Title, Author, and Publication date of all books published before 1950 that are currently available, sorted by publication date in ascending order.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabLinks;
+            
+            // Hide all tab content
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            
+            // Remove "active" class from all tab links
+            tabLinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+            }
+            
+            // Show the current tab, and add "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
